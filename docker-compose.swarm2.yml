@@ -1,0 +1,542 @@
+# Swarm 2 overlay for Gilded Guardian CTF practice range.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.swarm2.yml up -d
+
+networks:
+  mantis-swarm-2:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/16
+  attack-net:
+    # Defined in base docker-compose.yml; redeclared here so Compose
+    # merges rather than errors.  No ipam override needed.
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
+
+x-node-defaults-s2: &node-defaults-s2
+  build:
+    context: .
+    dockerfile: docker/Dockerfile.node
+  restart: on-failure
+  init: true
+  mem_limit: 128m
+  cpus: 0.5
+  tmpfs:
+    - /run:size=32M,exec
+    - /tmp:size=50M,exec
+  read_only: true
+  networks:
+    - mantis-swarm-2
+
+services:
+  # ==========================================================================
+  #  SWARM 2 — CONTROLLERS (5)
+  # ==========================================================================
+  s2-controller-1:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: controller
+    container_name: mantis-s2-controller-1
+    environment:
+      - CONTROLLER_CONFIG_PATH=/etc/controller/config.yaml
+    volumes:
+      - ./configs-s2/s2-controller-1/config.yaml:/etc/controller/config.yaml:ro
+      - ./configs-s2/s2-controller-1/key.pem:/etc/controller/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.1.1
+      attack-net:
+        ipv4_address: 172.21.0.206
+
+  s2-controller-2:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: controller
+    container_name: mantis-s2-controller-2
+    environment:
+      - CONTROLLER_CONFIG_PATH=/etc/controller/config.yaml
+    volumes:
+      - ./configs-s2/s2-controller-2/config.yaml:/etc/controller/config.yaml:ro
+      - ./configs-s2/s2-controller-2/key.pem:/etc/controller/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.1.2
+      attack-net:
+        ipv4_address: 172.21.0.207
+
+  s2-controller-3:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: controller
+    container_name: mantis-s2-controller-3
+    environment:
+      - CONTROLLER_CONFIG_PATH=/etc/controller/config.yaml
+    volumes:
+      - ./configs-s2/s2-controller-3/config.yaml:/etc/controller/config.yaml:ro
+      - ./configs-s2/s2-controller-3/key.pem:/etc/controller/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.1.3
+      attack-net:
+        ipv4_address: 172.21.0.208
+
+  s2-controller-4:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: controller
+    container_name: mantis-s2-controller-4
+    environment:
+      - CONTROLLER_CONFIG_PATH=/etc/controller/config.yaml
+    volumes:
+      - ./configs-s2/s2-controller-4/config.yaml:/etc/controller/config.yaml:ro
+      - ./configs-s2/s2-controller-4/key.pem:/etc/controller/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.1.4
+      attack-net:
+        ipv4_address: 172.21.0.209
+
+  s2-controller-5:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: controller
+    container_name: mantis-s2-controller-5
+    environment:
+      - CONTROLLER_CONFIG_PATH=/etc/controller/config.yaml
+    volumes:
+      - ./configs-s2/s2-controller-5/config.yaml:/etc/controller/config.yaml:ro
+      - ./configs-s2/s2-controller-5/key.pem:/etc/controller/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.1.5
+      attack-net:
+        ipv4_address: 172.21.0.210
+
+  # ==========================================================================
+  #  SWARM 2 — SENSORS (6)
+  # ==========================================================================
+  s2-sensor-1:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: sensor
+    container_name: mantis-s2-sensor-1
+    environment:
+      - SENSOR_CONFIG_PATH=/etc/sensor/config.yaml
+    volumes:
+      - ./configs-s2/s2-sensor-1/config.yaml:/etc/sensor/config.yaml:ro
+      - ./configs-s2/s2-sensor-1/key.pem:/etc/sensor/key.pem:ro
+      - s2-sensor1-data:/var/lib/mantis
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.2.1
+      attack-net:
+        ipv4_address: 172.21.0.131
+
+  s2-sensor-2:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: sensor
+    container_name: mantis-s2-sensor-2
+    environment:
+      - SENSOR_CONFIG_PATH=/etc/sensor/config.yaml
+    volumes:
+      - ./configs-s2/s2-sensor-2/config.yaml:/etc/sensor/config.yaml:ro
+      - ./configs-s2/s2-sensor-2/key.pem:/etc/sensor/key.pem:ro
+      - s2-sensor2-data:/var/lib/mantis
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.2.2
+      attack-net:
+        ipv4_address: 172.21.0.132
+
+  s2-sensor-3:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: sensor
+    container_name: mantis-s2-sensor-3
+    environment:
+      - SENSOR_CONFIG_PATH=/etc/sensor/config.yaml
+    volumes:
+      - ./configs-s2/s2-sensor-3/config.yaml:/etc/sensor/config.yaml:ro
+      - ./configs-s2/s2-sensor-3/key.pem:/etc/sensor/key.pem:ro
+      - s2-sensor3-data:/var/lib/mantis
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.2.3
+      attack-net:
+        ipv4_address: 172.21.0.133
+
+  s2-sensor-4:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: sensor
+    container_name: mantis-s2-sensor-4
+    environment:
+      - SENSOR_CONFIG_PATH=/etc/sensor/config.yaml
+    volumes:
+      - ./configs-s2/s2-sensor-4/config.yaml:/etc/sensor/config.yaml:ro
+      - ./configs-s2/s2-sensor-4/key.pem:/etc/sensor/key.pem:ro
+      - s2-sensor4-data:/var/lib/mantis
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.2.4
+      attack-net:
+        ipv4_address: 172.21.0.134
+
+  s2-sensor-5:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: sensor
+    container_name: mantis-s2-sensor-5
+    environment:
+      - SENSOR_CONFIG_PATH=/etc/sensor/config.yaml
+    volumes:
+      - ./configs-s2/s2-sensor-5/config.yaml:/etc/sensor/config.yaml:ro
+      - ./configs-s2/s2-sensor-5/key.pem:/etc/sensor/key.pem:ro
+      - s2-sensor5-data:/var/lib/mantis
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.2.5
+      attack-net:
+        ipv4_address: 172.21.0.135
+
+  s2-sensor-6:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: sensor
+    container_name: mantis-s2-sensor-6
+    environment:
+      - SENSOR_CONFIG_PATH=/etc/sensor/config.yaml
+    volumes:
+      - ./configs-s2/s2-sensor-6/config.yaml:/etc/sensor/config.yaml:ro
+      - ./configs-s2/s2-sensor-6/key.pem:/etc/sensor/key.pem:ro
+      - s2-sensor6-data:/var/lib/mantis
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.2.6
+      attack-net:
+        ipv4_address: 172.21.0.136
+
+  # ==========================================================================
+  #  SWARM 2 — BOOMERS (15)  —  mantis-swarm-2 ONLY, no attack-net
+  # ==========================================================================
+  s2-boomer-1:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-1
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-1/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-1/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.1
+
+  s2-boomer-2:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-2
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-2/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-2/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.2
+
+  s2-boomer-3:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-3
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-3/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-3/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.3
+
+  s2-boomer-4:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-4
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-4/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-4/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.4
+
+  s2-boomer-5:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-5
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-5/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-5/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.5
+
+  s2-boomer-6:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-6
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-6/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-6/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.6
+
+  s2-boomer-7:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-7
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-7/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-7/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.7
+
+  s2-boomer-8:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-8
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-8/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-8/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.8
+
+  s2-boomer-9:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-9
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-9/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-9/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.9
+
+  s2-boomer-10:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-10
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-10/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-10/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.10
+
+  s2-boomer-11:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-11
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-11/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-11/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.11
+
+  s2-boomer-12:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-12
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-12/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-12/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.12
+
+  s2-boomer-13:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-13
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-13/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-13/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.13
+
+  s2-boomer-14:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-14
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-14/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-14/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.14
+
+  s2-boomer-15:
+    <<: *node-defaults-s2
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+      target: boomer
+    container_name: mantis-s2-boomer-15
+    environment:
+      - BOOMER_CONFIG_PATH=/etc/boomer/config.yaml
+    volumes:
+      - ./configs-s2/s2-boomer-15/config.yaml:/etc/boomer/config.yaml:ro
+      - ./configs-s2/s2-boomer-15/key.pem:/etc/boomer/key.pem:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.3.15
+
+  # ==========================================================================
+  #  SWARM 2 — SCENARIO ENGINE
+  # ==========================================================================
+  s2-scenario:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.scenario
+    container_name: mantis-s2-scenario
+    restart: unless-stopped
+    mem_limit: 256m
+    environment:
+      - SCENARIO_PATH=/etc/mantis/scenario.json
+    volumes:
+      - ./scenario/scenarios/s2-standard.json:/etc/mantis/scenario.json:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.10.1
+    depends_on:
+      - s2-sensor-1
+      - s2-sensor-2
+      - s2-sensor-3
+      - s2-sensor-4
+      - s2-sensor-5
+      - s2-sensor-6
+
+  # ==========================================================================
+  #  SWARM 2 — SCOREBOARD
+  # ==========================================================================
+  s2-scoreboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.scoreboard
+    container_name: mantis-s2-scoreboard
+    restart: unless-stopped
+    mem_limit: 128m
+    environment:
+      - SCENARIO_ADDR=http://172.22.10.1:9090
+      - CONTAINER_PREFIX=mantis-s2-
+      - >-
+        SCOREBOARD_NODES=[{"ID":"controller-1","Type":"controller","Address":"http://172.22.1.1:10000"},{"ID":"controller-2","Type":"controller","Address":"http://172.22.1.2:10000"},{"ID":"controller-3","Type":"controller","Address":"http://172.22.1.3:10000"},{"ID":"controller-4","Type":"controller","Address":"http://172.22.1.4:10000"},{"ID":"controller-5","Type":"controller","Address":"http://172.22.1.5:10000"},{"ID":"sensor-1","Type":"sensor","Address":"http://172.22.2.1:10000"},{"ID":"sensor-2","Type":"sensor","Address":"http://172.22.2.2:10000"},{"ID":"sensor-3","Type":"sensor","Address":"http://172.22.2.3:10000"},{"ID":"sensor-4","Type":"sensor","Address":"http://172.22.2.4:10000"},{"ID":"sensor-5","Type":"sensor","Address":"http://172.22.2.5:10000"},{"ID":"sensor-6","Type":"sensor","Address":"http://172.22.2.6:10000"},{"ID":"boomer-1","Type":"boomer","Address":"http://172.22.3.1:10000"},{"ID":"boomer-2","Type":"boomer","Address":"http://172.22.3.2:10000"},{"ID":"boomer-3","Type":"boomer","Address":"http://172.22.3.3:10000"},{"ID":"boomer-4","Type":"boomer","Address":"http://172.22.3.4:10000"},{"ID":"boomer-5","Type":"boomer","Address":"http://172.22.3.5:10000"},{"ID":"boomer-6","Type":"boomer","Address":"http://172.22.3.6:10000"},{"ID":"boomer-7","Type":"boomer","Address":"http://172.22.3.7:10000"},{"ID":"boomer-8","Type":"boomer","Address":"http://172.22.3.8:10000"},{"ID":"boomer-9","Type":"boomer","Address":"http://172.22.3.9:10000"},{"ID":"boomer-10","Type":"boomer","Address":"http://172.22.3.10:10000"},{"ID":"boomer-11","Type":"boomer","Address":"http://172.22.3.11:10000"},{"ID":"boomer-12","Type":"boomer","Address":"http://172.22.3.12:10000"},{"ID":"boomer-13","Type":"boomer","Address":"http://172.22.3.13:10000"},{"ID":"boomer-14","Type":"boomer","Address":"http://172.22.3.14:10000"},{"ID":"boomer-15","Type":"boomer","Address":"http://172.22.3.15:10000"}]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:${S2_SCOREBOARD_PORT:-8081}:8080"
+    networks:
+      mantis-swarm-2:
+        ipv4_address: 172.22.10.2
+
+volumes:
+  s2-sensor1-data:
+  s2-sensor2-data:
+  s2-sensor3-data:
+  s2-sensor4-data:
+  s2-sensor5-data:
+  s2-sensor6-data:

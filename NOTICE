@@ -1,0 +1,61 @@
+Viceroy Practice Range
+Copyright (C) 2026 The Viceroy Contributors
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, version 3. See the LICENSE file for the full text.
+
+================================================================================
+THIRD-PARTY MATERIALS AND ATTRIBUTIONS
+================================================================================
+
+1. VICEROY / Gilded Guardian reference materials
+--------------------------------------------------
+The files under docs/comp-materials/ include documents describing the "Gilded
+Guardian" challenge series run by the VICEROY Virtual Institute and its
+partners. Ownership of those source documents remains with their respective
+authors and sponsors (including Cyber Outcomes Group LLC). They are retained
+here for educational commentary and training purposes only; any redistribution
+should honor the original authors' rights. If any rights-holder requests
+removal, open a GitHub issue and the material will be taken down.
+
+Affected files include (non-exhaustive):
+  - docs/comp-materials/GILDED-GUARDIAN-EXORD.pdf
+  - docs/comp-materials/GILDED-GUARDIAN-WARNORD.pdf
+  - docs/comp-materials/RRII+Mantis+Design.pdf
+  - docs/comp-materials/RRII Mantis Architecture.pdf
+  - docs/comp-materials/RRII CYBINT-RAW-Extraction.pdf
+  - docs/comp-materials/RRII-ELCOA-MANTIS.pdf
+
+The names "VICEROY", "Gilded Guardian", "Mantis", "RRII", and related trade
+dress are used here descriptively to identify the original competition that
+this practice range was built to train against. Use of these names does not
+imply endorsement or sponsorship.
+
+2. Go modules (declared in go.mod)
+--------------------------------------------------
+  - github.com/google/uuid                  MIT License
+  - github.com/mattn/go-sqlite3             MIT License
+  - gopkg.in/yaml.v3                        Apache-2.0 / MIT
+
+Full license texts for these dependencies are retrieved at build time by the
+Go toolchain and are available in each module's repository.
+
+3. Container base images
+--------------------------------------------------
+  - Alpine Linux 3.19                       MIT-style (see alpinelinux.org)
+  - Go 1.23 official images                 BSD-3-Clause (Go) + Alpine
+
+4. Tools referenced by the attack station
+--------------------------------------------------
+Sliver C2 (BishopFox) is referenced in documentation and installed at image
+build time in docker/Dockerfile.attack. Sliver is distributed under GPL-3.0,
+which is compatible with this project's license. See
+https://github.com/BishopFox/sliver for upstream source and attribution.
+
+5. Player-written scripts and writeups
+--------------------------------------------------
+The Python helpers and markdown writeups under docs/comp-materials/ that are
+not PDFs were authored by the original team during post-competition study.
+They are licensed under the same GPL-3.0-or-later terms as the rest of the
+repository.

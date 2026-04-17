@@ -1,0 +1,62 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  go:
+    name: go build + fmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+          cache: true
+
+      - name: Build all binaries
+        run: go build ./cmd/...
+
+      - name: gofmt check
+        run: |
+          out=$(gofmt -l ./cmd ./internal)
+          if [ -n "$out" ]; then
+              echo "gofmt would rewrite these files:"
+              echo "$out"
+              exit 1
+          fi
+
+      - name: go vet (advisory — does not fail build)
+        continue-on-error: true
+        run: go vet ./...
+
+  compose:
+    name: docker compose validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate swarm 1
+        run: docker compose config --quiet
+
+      - name: Validate swarm 1 + swarm 2 overlay
+        run: docker compose -f docker-compose.yml -f docker-compose.swarm2.yml config --quiet
+
+      - name: Validate wireguard sidecar overlay (example)
+        run: |
+          cp docker-compose.wireguard.example.yml docker-compose.wireguard.yml
+          docker compose -f docker-compose.yml -f docker-compose.wireguard.yml config --quiet
+
+  shellcheck:
+    name: shellcheck scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: ./scripts
+          severity: warning

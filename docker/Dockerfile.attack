@@ -1,0 +1,59 @@
+# Attack station: full tooling for CTF team with Sliver C2
+FROM alpine:3.19
+
+RUN apk add --no-cache \
+    openssh-server \
+    bash \
+    curl \
+    wget \
+    jq \
+    python3 \
+    py3-pip \
+    nmap \
+    nmap-scripts \
+    nmap-ncat \
+    tcpdump \
+    net-tools \
+    bind-tools \
+    socat \
+    tmux \
+    vim \
+    git \
+    go \
+    gcc \
+    musl-dev \
+    strace \
+    libc6-compat \
+    gcompat \
+    && mkdir -p /run/sshd /workspace /var/run/sshd /var/www \
+    && chmod 777 /var/www \
+    && ssh-keygen -A \
+    && echo "PermitRootLogin no" >> /etc/ssh/sshd_config \
+    && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config \
+    && echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config \
+    && echo "AllowTcpForwarding yes" >> /etc/ssh/sshd_config \
+    && echo "X11Forwarding no" >> /etc/ssh/sshd_config \
+    && addgroup -S team \
+    && chmod 1777 /workspace
+
+# Install Sliver C2 — download server and client binaries
+RUN curl -fsSL -o /usr/local/bin/sliver-server \
+       "https://github.com/BishopFox/sliver/releases/download/v1.7.3/sliver-server_linux-amd64" \
+    && chmod +x /usr/local/bin/sliver-server \
+    && curl -fsSL -o /usr/local/bin/sliver \
+       "https://github.com/BishopFox/sliver/releases/download/v1.7.3/sliver-client_linux-amd64" \
+    && chmod +x /usr/local/bin/sliver
+
+# Create a default team user
+RUN adduser -D -G team -s /bin/bash phoenix \
+    && mkdir -p /home/phoenix/.ssh \
+    && chmod 700 /home/phoenix/.ssh \
+    && chown -R phoenix:team /home/phoenix
+
+EXPOSE 22
+
+COPY scripts/entrypoint-attack.sh /entrypoint.sh
+COPY scripts/reset-range.sh /usr/local/bin/reset-range
+RUN chmod +x /entrypoint.sh /usr/local/bin/reset-range
+
+ENTRYPOINT ["/entrypoint.sh"]

@@ -1,0 +1,48 @@
+# Multi-stage build: compile Go → locked-down runtime
+# Realistic: NixOS-like paths, Python3 available, no normal shell
+
+FROM golang:1.23-alpine AS builder
+
+RUN apk add --no-cache gcc musl-dev sqlite-dev
+
+WORKDIR /build
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+
+# Build all three node types
+RUN CGO_ENABLED=1 go build -ldflags="-s -w" -o /controller ./cmd/controller/
+RUN CGO_ENABLED=1 go build -ldflags="-s -w" -o /sensor ./cmd/sensor/
+RUN CGO_ENABLED=1 go build -ldflags="-s -w" -o /boomer ./cmd/boomer/
+
+# --- Runtime: intentionally minimal but competition-realistic ---
+FROM alpine:3.19 AS runtime-base
+
+RUN apk add --no-cache sqlite-libs ca-certificates python3 py3-yaml bash \
+    # Remove the default shell symlinks attackers expect
+    && rm -f /bin/sh /bin/ash \
+    # Remove package manager so attackers can't install things
+    && rm -rf /sbin/apk /etc/apk /lib/apk /var/cache/apk \
+    # Create data and config directories
+    && mkdir -p /var/lib/mantis /tmp \
+    && mkdir -p /etc/controller \
+    && mkdir -p /etc/sensor \
+    && mkdir -p /etc/boomer
+
+# Entrypoint script creates NixOS paths in /run tmpfs at boot
+COPY docker/entrypoint.sh /entrypoint.sh
+
+# --- Controller image ---
+FROM runtime-base AS controller
+COPY --from=builder /controller /usr/bin/mantis-node
+ENTRYPOINT ["/entrypoint.sh"]
+
+# --- Sensor image ---
+FROM runtime-base AS sensor
+COPY --from=builder /sensor /usr/bin/mantis-node
+ENTRYPOINT ["/entrypoint.sh"]
+
+# --- Boomer image ---
+FROM runtime-base AS boomer
+COPY --from=builder /boomer /usr/bin/mantis-node
+ENTRYPOINT ["/entrypoint.sh"]

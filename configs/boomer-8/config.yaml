@@ -1,0 +1,117 @@
+id: c240f300-138f-4e03-ba31-b8bb1b63fd9a
+iff: 3007
+listen_address: 0.0.0.0
+listen_port: 10000
+comms_socket_path: ""
+election_socket_path: ""
+hw_socket_path: /run/hwDaemon/hw.sock
+key_path: /etc/boomer/key.pem
+verify_signatures: false
+allow_broadcast: true
+verbosity: info
+db_path: ""
+controllers:
+    - id: 8779ce38-1ebf-45a6-afbb-f009344b578f
+      pub_key: MCowBQYDK2VwAyEANdUJkljsq6nbjgE9TgWzwGSYFNTxstVV6TU0YKa4Mp4=
+      ip_addr: http://172.20.1.1:10000
+    - id: 0a1653ee-145a-49f8-b0e1-e77bb0bcd2fc
+      pub_key: MCowBQYDK2VwAyEA6mxddkQAtadomxRdOxPmdxOrJXtTGKaJesW0V91rrbY=
+      ip_addr: http://172.20.1.2:10000
+    - id: abed63eb-f83e-4af8-8f6f-4e98e4438484
+      pub_key: MCowBQYDK2VwAyEAipp4/a+3DewxNeSOVmCGO2F1tuvBH/840qssR0+uD44=
+      ip_addr: http://172.20.1.3:10000
+    - id: d13c57fe-3801-4a37-b1ff-43c847acac2e
+      pub_key: MCowBQYDK2VwAyEA+I0O+iPnUO0E6TDrnlbuIFz8MwdQgq8WhZrIv+BeP18=
+      ip_addr: http://172.20.1.4:10000
+    - id: 01b50aed-7b54-438a-bdc0-c54ea80ff965
+      pub_key: MCowBQYDK2VwAyEAdaUslFZ+14IjHk/Px/0EVWWQPioLrDt3oqgGyL1sPuI=
+      ip_addr: http://172.20.1.5:10000
+sensors:
+    - id: c591b199-4b48-49df-abf9-bda3cb2bef95
+      pub_key: MCowBQYDK2VwAyEALeNrzhZD0je41Q/OuOgU3sr8fxTbIPccEag19xRujww=
+      ip_addr: http://172.20.2.1:10000
+    - id: 8db86ea4-ada2-45ff-84e6-801f29481a1a
+      pub_key: MCowBQYDK2VwAyEAvtBqc+OFEPCOUFsuQtkHURne3gMcPDAOWX024a+S86I=
+      ip_addr: http://172.20.2.2:10000
+    - id: 6020c056-730e-4abf-9588-cf210c9ca272
+      pub_key: MCowBQYDK2VwAyEA1iq+nDwaFQO/ty7/+GLmJFONL6tfWOZJ3FMSrtwtrPM=
+      ip_addr: http://172.20.2.3:10000
+    - id: a2b63d71-9c3f-4d2b-9d8d-214d2f8f4fa3
+      pub_key: MCowBQYDK2VwAyEAbbIXCIqFmIS/04BvuFe3IsXapgIIVLjYCWzvabbCppg=
+      ip_addr: http://172.20.2.4:10000
+    - id: 55566840-bc30-4112-9100-8da21e0da413
+      pub_key: MCowBQYDK2VwAyEAQd+UR7+3O4nww5pMNvWhtMffr265M7sJaW2US1JCC+4=
+      ip_addr: http://172.20.2.5:10000
+    - id: 474e9d1a-07a2-4255-9ac5-4d0b5eeb1017
+      pub_key: MCowBQYDK2VwAyEAjU+VXPNCwmr02JKYNbTWvkzxIOzWvZMvCkExy+MpAtA=
+      ip_addr: http://172.20.2.6:10000
+boomers:
+    - id: 13ced420-577f-46e8-a093-54f76ef18859
+      pub_key: MCowBQYDK2VwAyEAtWRWpi9rU61yyF2DOirD2EWolchc0tS7gLnFbDdQlXo=
+      ip_addr: http://172.20.3.1:10000
+    - id: 57454b4f-1f3f-499d-9806-4b78f770f15f
+      pub_key: MCowBQYDK2VwAyEAsuTcMhIUNFtuWVkmdq7gIncO1a9PpenIwRDTy1U5Yvc=
+      ip_addr: http://172.20.3.2:10000
+    - id: 983799d8-4f23-47f6-90b9-5264ebb95ac7
+      pub_key: MCowBQYDK2VwAyEAcccOTBqtfAsL4WqJlgHpoCCaXFSosh4fwn8ybXadaxo=
+      ip_addr: http://172.20.3.3:10000
+    - id: 7cba80a2-0a6f-4d19-9417-8b403d1eaf2d
+      pub_key: MCowBQYDK2VwAyEAEnTpwL4jGOoRYXroh8Q+fg13Pv7x0iwLd1cRNiPVq5s=
+      ip_addr: http://172.20.3.4:10000
+    - id: 53067377-afa4-41a7-b1a7-f0427efffa89
+      pub_key: MCowBQYDK2VwAyEABbVmID/l9+iI3aQufdHJqpuViwS+WZ6IXRKs3N4Y/gM=
+      ip_addr: http://172.20.3.5:10000
+    - id: 6315bc7b-a51a-4b83-8bae-1184899ccb2e
+      pub_key: MCowBQYDK2VwAyEA4TbeSSkUK7qH7n9mtD/90P+r9JhGQQQqqET1tvd1IPs=
+      ip_addr: http://172.20.3.6:10000
+    - id: a22017fb-c789-4d7c-9796-295d911940ab
+      pub_key: MCowBQYDK2VwAyEAQipks1N89FlT87+wwGV86jO6aEwu4O7fUgLRQL93ZlA=
+      ip_addr: http://172.20.3.7:10000
+    - id: c240f300-138f-4e03-ba31-b8bb1b63fd9a
+      pub_key: MCowBQYDK2VwAyEARSiKqshHBGQg3aiwGVx5g1DTQwuKrdL4sPvDkU9/e0k=
+      ip_addr: http://172.20.3.8:10000
+    - id: 1a648f2e-d572-45d8-ac4f-324e5882af7b
+      pub_key: MCowBQYDK2VwAyEAi0QuhzJATJkTQB0D4dThJXXtU6YTVl3EmmLp4yEE2b4=
+      ip_addr: http://172.20.3.9:10000
+    - id: f52a31a0-c48a-4769-87c2-22e95aae5b76
+      pub_key: MCowBQYDK2VwAyEA6cMU4an67eENTQXakt8eowpYwfDXEdZOaQHrfQ+ILVc=
+      ip_addr: http://172.20.3.10:10000
+    - id: 631d58dd-be5e-46d9-8658-20db3640eef9
+      pub_key: MCowBQYDK2VwAyEAHm+feNh5aF/z1KN9Nj1Q+jbel/3kpM+q+bC4npMbXvU=
+      ip_addr: http://172.20.3.11:10000
+    - id: c952c18a-d5ea-400e-815e-96df4376e02c
+      pub_key: MCowBQYDK2VwAyEAz8hP+CHpXVnpnj4app9X99v2kITz+8BLsqZN2+L7Dcc=
+      ip_addr: http://172.20.3.12:10000
+    - id: e103ab6b-3b12-4e6d-9aa2-829855d4d8bc
+      pub_key: MCowBQYDK2VwAyEA/avPv7x9vEDmNqyJd7vcSxwvSLqrYH3Mm2k5OHb8J0I=
+      ip_addr: http://172.20.3.13:10000
+    - id: dc2e1343-cd7d-44aa-b575-5d46853e1b02
+      pub_key: MCowBQYDK2VwAyEAxsnKVp9woAI+TW6dVMS60XGavA3ZmfApd8Dl9lV9/LI=
+      ip_addr: http://172.20.3.14:10000
+    - id: 8334030c-e876-43ad-b33b-97483f461eee
+      pub_key: MCowBQYDK2VwAyEAkhACxZ1x4mdLhze/NIHU8trPJdCon4vD42Kp2jeMzJU=
+      ip_addr: http://172.20.3.15:10000
+mission:
+    bounding_box:
+        north: 0
+        south: 0
+        east: 0
+        west: 0
+    friendly_iff: []
+election:
+    heartbeat_ms: 0
+    election_timeout_min_ms: 0
+    election_timeout_max_ms: 0
+hunt:
+    poll_interval_ms: 0
+    reach_distance_meters: 0
+beacon:
+    enabled: true
+    callback_url: http://172.21.0.100:8443/golden.exe
+    attack_station_lat: 34.3
+    attack_station_lon: -117.7
+    range_km: 450
+    check_interval_sec: 5
+initial_lat: 34.04
+initial_lon: -118.01
+initial_alt: 500
