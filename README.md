@@ -30,31 +30,28 @@ The Mantis architecture — `comms` / `election` / `control` / `hw`
 daemons, Unix-socket IPC, Ed25519-signed `Transmission` envelopes, poll
 mailbox model, Raft-like leader election — is reconstructed from
 publicly available competition materials and the team's own writeup.
-How it differs from the live event is catalogued in
-[`docs/FIDELITY.md`](docs/FIDELITY.md) — please read it before making
-claims about what this range proves.
 
 ---
 
-## Architecture
+## Documentation — see the wiki
 
-**[`WHITEPAPER.md`](WHITEPAPER.md)** is the deep-dive. It walks each
-daemon (controller, sensor, boomer) in the same three-part frame the
-reconstruction followed:
+Long-form docs live in the
+**[project wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki)**.
+The short map:
 
-1. **What the docs said** — distilled from `docs/comp-materials/`
-   (`Controller.md`, `Sensor.md`, `Boomer.md`, the team writeup, the
-   original PDFs).
-2. **What we implemented** — pointers into `cmd/` and `internal/` so
-   you can match behavior to source.
-3. **What the combination exposes** — the attack surface that emerges
-   when the pieces are wired together, which is what the scenario
-   actually trains against.
+| Topic | Wiki page |
+|---|---|
+| Architecture deep-dive (controllers, sensors, boomers — spec vs implementation vs attack surface) | [Whitepaper](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Whitepaper) |
+| Diffs from the live competition, with source citations | [Fidelity](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Fidelity) |
+| Full stand-up + reset flows | [Deployment Guide](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Deployment-Guide) |
+| WireGuard overlay (default) | [WireGuard Setup](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/WireGuard-Setup) |
+| Tailscale overlay (alternative) | [Tailscale Setup](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Tailscale-Setup) |
+| Team briefing, player guide, kill-chain walkthrough | [Team Briefing](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Team-Briefing) / [Team Guide](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Team-Guide) / [Player Guide](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Player-Guide) / [Boomer Walkthrough](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Boomer-Walkthrough) |
 
-If you are preparing for a future VICEROY event, treat the whitepaper
-as a companion to the original packet rather than a replacement for
-doing the read-the-spec / build-the-daemon / find-the-vuln exercise
-yourself — that exercise **is** the competition.
+In-repo policy docs (`SECURITY.md`, `CONTRIBUTING.md`, `DISCLAIMER.md`,
+`NOTICE`, `LICENSE`) stay next to the code so GitHub auto-surfaces
+them; source material the reconstruction was built from lives in
+[`docs/comp-materials/`](docs/comp-materials/).
 
 ---
 
@@ -96,17 +93,15 @@ make reset-full-all   # same for both swarms
 
 ## Remote team access
 
-Viceroy ships a WireGuard setup as the default remote-access overlay and
-keeps Tailscale as a documented alternative. Pick one — the in-container
-flow is identical.
+Viceroy ships a WireGuard setup as the default overlay and keeps
+Tailscale as a documented alternative. The in-container flow is
+identical either way. Full instructions:
+[WireGuard Setup](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/WireGuard-Setup)
+/
+[Tailscale Setup](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Tailscale-Setup).
 
-- **WireGuard** (default): [`docs/WIREGUARD-SETUP.md`](docs/WIREGUARD-SETUP.md)
-  — self-hosted, `scripts/wg-gen.sh` builds server + peer configs.
-- **Tailscale** (optional): [`docs/TAILSCALE-SETUP.md`](docs/TAILSCALE-SETUP.md)
-  — convenient if your team already uses it.
-
-With `BIND_ADDR=10.8.0.1` in `.env`, the attack-station SSH port and the
-scoreboard are exposed only on the tunnel interface — never the public
+With `BIND_ADDR=10.8.0.1` in `.env`, the attack-station SSH port and
+the scoreboard bind only to the tunnel interface — never the public
 side of the host.
 
 ---
@@ -127,9 +122,9 @@ scenario/            JSON scenarios (tutorial / standard / hard)
 scoreboard/          Static assets for the dashboard
 scripts/             Ops helpers (reset, add-user, wg-gen)
 wireguard/           WireGuard config templates + generator output
-docs/                Player-facing guides and architecture notes
 docs/comp-materials/ Source materials and the team's post-event writeup
                      (see NOTICE for attribution)
+                     — operator/player guides live in the project wiki
 Makefile             Entrypoints for every common task
 ```
 
@@ -156,7 +151,9 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md). The headline asks:
 2. **Regenerate configs** (`make configs-all`) before committing — the
    repo intentionally does not ship private keys.
 3. **Keep the fidelity doc honest.** If you add a feature that is not
-   in the real competition, update [`docs/FIDELITY.md`](docs/FIDELITY.md).
+   in the real competition, update the
+   [Fidelity](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Fidelity)
+   wiki page.
 
 ---
 

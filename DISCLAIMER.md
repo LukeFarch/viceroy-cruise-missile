@@ -24,7 +24,7 @@ post-event writeup.
   are retained under fair-use for educational commentary; see `NOTICE` for
   the takedown policy.
 - Not representative of the exact scale, timing, or scoring of the live
-  event. See `docs/FIDELITY.md` for a point-by-point comparison.
+  event. See [Fidelity wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Fidelity) for a point-by-point comparison.
 - Not a shortcut for VICEROY scholars attempting to game the official
   competition. Teams are still expected to meet the program's own rules
   and requirements.
@@ -34,7 +34,7 @@ post-event writeup.
 This range ships with known weaknesses on purpose — that is the training
 value. Do not run it on a shared network, a production VLAN, or anything
 reachable from the public internet without the access controls documented
-in `docs/WIREGUARD-SETUP.md`. See `SECURITY.md` for the full threat model.
+in [WireGuard Setup wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/WireGuard-Setup). See `SECURITY.md` for the full threat model.
 
 ## Trademark note
 

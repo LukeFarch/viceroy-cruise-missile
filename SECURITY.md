@@ -12,8 +12,8 @@ Before bringing a range online:
 
 1. **Do not expose the range to the public internet.** Remote team access
    is intended to go through the WireGuard tunnel described in
-   `docs/WIREGUARD-SETUP.md`, or the optional Tailscale overlay in
-   `docs/TAILSCALE-SETUP.md`. Never bind the attack-station SSH port or the
+   [WireGuard Setup wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/WireGuard-Setup), or the optional Tailscale overlay in
+   [Tailscale Setup wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Tailscale-Setup). Never bind the attack-station SSH port or the
    scoreboard to `0.0.0.0` on a public host.
 2. **Regenerate credentials for every deployment.** Run `make configs` (or
    `make configs-all`) before `docker compose up` so each deployment has

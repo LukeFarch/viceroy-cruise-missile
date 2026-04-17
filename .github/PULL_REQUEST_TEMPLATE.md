@@ -7,11 +7,11 @@
 - [ ] `docker compose config --quiet` passes for both swarm files
 - [ ] No secrets, tailnet IPs, or hardcoded passwords in the diff
 - [ ] Configs regenerated if daemon code changed (`make configs-all`)
-- [ ] `docs/FIDELITY.md` updated if this changes behavior relative to the real competition
+- [ ] [Fidelity wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Fidelity) updated if this changes behavior relative to the real competition
 - [ ] New Go files carry the `SPDX-License-Identifier: GPL-3.0-or-later` header
 
 ## Fidelity note
 <!-- Skip if N/A. Otherwise: does this move behavior toward or away from the real event, and how should the fidelity doc change? -->
 
 ## Attack-surface note
-<!-- Skip if N/A. If this changes any item in WHITEPAPER.md §7 (scenario attack surface), justify why. -->
+<!-- Skip if N/A. If this changes any item in Whitepaper wiki (https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Whitepaper) §7 (scenario attack surface), justify why. -->

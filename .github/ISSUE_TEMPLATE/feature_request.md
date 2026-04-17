@@ -14,6 +14,6 @@ What would you like to happen?
 **Fidelity impact**
 Does this move the range closer to or further from the real Gilded
 Guardian event? If closer, cite the source. If further, that is fine
-but should be reflected in `docs/FIDELITY.md`.
+but should be reflected in [Fidelity wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Fidelity).
 
 **Alternatives considered**

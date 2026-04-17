@@ -19,7 +19,7 @@ Thanks for wanting to help. A few things to know before you open a PR.
         up -d --build
     ```
 
-3. **Keep `docs/FIDELITY.md` honest.** If your change moves behavior
+3. **Keep [Fidelity wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Fidelity) honest.** If your change moves behavior
    toward or away from the real Gilded Guardian event, update the
    relevant row and the PR description.
 4. **Respect the DISCLAIMER.** This repo is unaffiliated with VICEROY,
@@ -93,9 +93,9 @@ Maintainers check for:
 
 - Secrets in diff.
 - Fidelity document consistency.
-- Whether the change needs a follow-up to `README.md` or `WHITEPAPER.md`.
+- Whether the change needs a follow-up to `README.md` or [Whitepaper wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Whitepaper).
 - Whether the change alters the attack surface (items in
-  `WHITEPAPER.md` §7) — those changes need a justification in the PR
+  [Whitepaper wiki](https://github.com/LukeFarch/viceroy-cruise-missile/wiki/Whitepaper) §7) — those changes need a justification in the PR
   description.
 
 ---

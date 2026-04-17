@@ -7,7 +7,7 @@
 # and exposes UDP ${WG_SERVER_PORT:-51820} on the host. All other range
 # ports stay parameterized by ${BIND_ADDR} in docker-compose.yml.
 #
-# Host-level WireGuard (see docs/WIREGUARD-SETUP.md, Mode A) is simpler;
+# Host-level WireGuard (see WireGuard Setup wiki (https://github.com/LukeFarch/viceroy-cruise-missile/wiki/WireGuard-Setup), Mode A) is simpler;
 # use this overlay only if you cannot configure the host.
 
 services:
