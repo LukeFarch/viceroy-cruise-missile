@@ -30,9 +30,31 @@ The Mantis architecture — `comms` / `election` / `control` / `hw`
 daemons, Unix-socket IPC, Ed25519-signed `Transmission` envelopes, poll
 mailbox model, Raft-like leader election — is reconstructed from
 publicly available competition materials and the team's own writeup.
-Details in [`WHITEPAPER.md`](WHITEPAPER.md). How it differs from the
-live event is catalogued in [`docs/FIDELITY.md`](docs/FIDELITY.md) —
-please read it before making claims about what this range proves.
+How it differs from the live event is catalogued in
+[`docs/FIDELITY.md`](docs/FIDELITY.md) — please read it before making
+claims about what this range proves.
+
+---
+
+## Architecture
+
+**[`WHITEPAPER.md`](WHITEPAPER.md)** is the deep-dive. It walks each
+daemon (controller, sensor, boomer) in the same three-part frame the
+reconstruction followed:
+
+1. **What the docs said** — distilled from `docs/comp-materials/`
+   (`Controller.md`, `Sensor.md`, `Boomer.md`, the team writeup, the
+   original PDFs).
+2. **What we implemented** — pointers into `cmd/` and `internal/` so
+   you can match behavior to source.
+3. **What the combination exposes** — the attack surface that emerges
+   when the pieces are wired together, which is what the scenario
+   actually trains against.
+
+If you are preparing for a future VICEROY event, treat the whitepaper
+as a companion to the original packet rather than a replacement for
+doing the read-the-spec / build-the-daemon / find-the-vuln exercise
+yourself — that exercise **is** the competition.
 
 ---
 
